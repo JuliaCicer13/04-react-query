@@ -7,15 +7,15 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { fetchMovies }from "../../services/movieService";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import MovieModal from '../MovieModal/MovieModal';
+import {Toaster} from "react-hot-toast";
 
 export default function App() {  
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoader, setLoader] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [selectedMovie, setIsSelectedMovie] = useState<Movie | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
- 
+
    const handleSearch = async (query: string) =>{
      try {
       setLoader(true);
@@ -38,13 +38,11 @@ export default function App() {
  };
 
    const openModal = (movie: Movie) => {
-    setIsSelectedMovie(movie);
-    setIsModalOpen(true);
+    setSelectedMovie(movie);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    setIsSelectedMovie(null);
+    setSelectedMovie(null);
   };
 
 
@@ -53,8 +51,9 @@ export default function App() {
     <SearchBar onSubmit={handleSearch}/>
     {isLoader && <Loader/>}
     {isError && <ErrorMessage/>}
-    {movies.length > 0 && <MovieGrid onSelect={openModal} movie={movies}/>}
-    {isModalOpen && selectedMovie && <MovieModal movie={selectedMovie} onClose={closeModal}/>}
+    {movies.length > 0 && <MovieGrid onSelect={openModal} movies={movies}/>}
+    {selectedMovie && <MovieModal movie={selectedMovie} onClose={closeModal}/>}
+    <Toaster position="top-right" reverseOrder={false}/>
     </>
   );
 }
