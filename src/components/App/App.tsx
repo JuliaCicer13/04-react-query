@@ -8,6 +8,7 @@ import { fetchMovies }from "../../services/movieService";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import MovieModal from '../MovieModal/MovieModal';
 import {Toaster} from "react-hot-toast";
+import { useQuery } from '@tanstack/react-query';
 
 export default function App() {  
   const [movies, setMovies] = useState<Movie[]>([]);
