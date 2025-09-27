@@ -14,7 +14,6 @@ import css from "../App/App.module.css";
 
 export default function App() { 
 
-  const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [page, setPage] = useState(1);
   const [topic, setTopic] = useState('');
@@ -27,7 +26,7 @@ export default function App() {
     placeholderData: keepPreviousData,
   });
 
-   const totalPages = data?.total_page ?? 0;
+   const totalPages = data?.total_pages ?? 0;
 
 
    const handleSearch = async(newTopic: string) => {
@@ -64,7 +63,7 @@ export default function App() {
     )}
     {isLoading && <Loader/>}
     {isError && <ErrorMessage/>}
-    {movies.length > 0 && <MovieGrid onSelect={openModal} movies={movies}/>}
+    {isSuccess && data?.results.length > 0 && ( <MovieGrid onSelect={openModal} movies={data.results}/>)}
     {selectedMovie && <MovieModal movie={selectedMovie} onClose={closeModal}/>}
     <Toaster position="top-right" reverseOrder={false}/>
     </>
